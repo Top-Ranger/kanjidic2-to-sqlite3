@@ -1,0 +1,11 @@
+# PyCharm
+.idea
+
+#Python
+__pycache__
+*.pyc
+*.pyo
+
+#Input/output file
+kanjidic2.xml
+kanjidb.sqlite3
