@@ -50,7 +50,7 @@ def kanjidic2_to_sqlite3(input, output):
 
     #Creating tables
     cursor.execute("CREATE TABLE meta (key TEXT PRIMARY KEY, value TEXT)")
-    cursor.execute("CREATE TABLE kanji (literal text PRIMARY KEY, radical INT, strokecount INT, JLPT INT, ONreading TEXT, KUNreading TEXT, nanori TEXT, meaning TEXT)")
+    cursor.execute("CREATE TABLE kanji (literal TEXT PRIMARY KEY, radical INT, strokecount INT, JLPT INT, ONreading TEXT, KUNreading TEXT, nanori TEXT, meaning TEXT)")
     connection.commit()
 
     #Creating metadata
