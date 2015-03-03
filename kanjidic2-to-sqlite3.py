@@ -118,6 +118,7 @@ def kanjidic2_to_sqlite3(input, output):
                     cursor.execute("INSERT INTO kanji VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (literal, radical, strokecount, JLPT, ON, KUN, nanori, meaning))
 
     connection.commit()
+    connection.close()
     print('Converting done!')
     return
 
