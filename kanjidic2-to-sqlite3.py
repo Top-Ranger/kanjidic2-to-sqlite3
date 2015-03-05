@@ -76,7 +76,7 @@ def kanjidic2_to_sqlite3(input, output):
         literal = ''
         radical = ''
         strokecount = ''
-        JLPT = ''
+        JLPT = '0'
         ON = ''
         KUN = ''
         nanori = ''
