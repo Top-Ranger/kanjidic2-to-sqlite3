@@ -32,7 +32,7 @@ def kanjidic2_to_sqlite3(input, output):
     :return: None
     """
     print('Input file: %s' % input)
-    print('Output file: %s', output)
+    print('Output file: %s' % output)
 
     if not os.path.isfile(input):
         raise IOError('Input file %s not found' % input)
@@ -116,6 +116,13 @@ def kanjidic2_to_sqlite3(input, output):
                         nanori += reading_meaning.text
                 if literal != '' and radical != '' and strokecount != '' and ON != '' and KUN != '' and meaning != '':
                     cursor.execute("INSERT INTO kanji VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (literal, radical, strokecount, JLPT, ON, KUN, nanori, meaning))
+
+    connection.commit()
+
+    cursor.execute("CREATE TABLE radical (radical TEXT PRIMARY KEY, number INT)")
+
+    for i in range(214):
+        cursor.execute("INSERT INTO radical VALUES (?, ?)", (chr(0x2F00+i), i+1))
 
     connection.commit()
     connection.close()
