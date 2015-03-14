@@ -118,7 +118,7 @@ def kanjidic2_to_sqlite3(input, output):
                         if nanori != '':
                             nanori += ', '
                         nanori += reading_meaning.text
-                if literal != '' and radical != '' and strokecount != '' and ON != '' and KUN != '' and meaning != '':
+                if literal != '' and radical != '' and strokecount != '' and meaning != '':
                     cursor.execute("INSERT INTO kanji VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (literal, radical, strokecount, JLPT, ON, KUN, nanori, meaning))
                     converted += 1
                 else:
