@@ -2,8 +2,8 @@ meta
 key(STRING) value(STRING)
 
 kanji
-literal(String) radical(INT)                        strokecount(INT)  JLPT(INT) ONreading(String)               KUNreading(String)               nanori(String) meaning(String)
-[literal]       [rad_value rad_type="classical"]    [stroke_count]    [jlpt]    [reading r_type="ja_on"+] [reading r_type="ja_kun"+] [nanori+]       [meaning+]
+literal(String) radical(INT)                        strokecount(INT)  JLPT(INT) ONreading(String)               KUNreading(String)               nanori(String) meaning(String), skip_1(INT), skip_2(INT), skip_3(INT)
+[literal]       [rad_value rad_type="classical"]    [stroke_count]    [jlpt]    [reading r_type="ja_on"+] [reading r_type="ja_kun"+] [nanori+]       [meaning+]                  [Skip 1-22-33]
 
 radical
 radical(String) number(INT)

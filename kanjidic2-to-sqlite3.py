@@ -20,6 +20,7 @@ import os
 import time
 import sqlite3
 import xml.etree.ElementTree
+from PyQt4.QtCore import qAbs
 
 
 def kanjidic2_to_sqlite3(input, output):
@@ -54,7 +55,7 @@ def kanjidic2_to_sqlite3(input, output):
 
     #Creating tables
     cursor.execute("CREATE TABLE meta (key TEXT PRIMARY KEY, value TEXT)")
-    cursor.execute("CREATE TABLE kanji (literal TEXT PRIMARY KEY, radical INT, strokecount INT, JLPT INT, ONreading TEXT, KUNreading TEXT, nanori TEXT, meaning TEXT)")
+    cursor.execute("CREATE TABLE kanji (literal TEXT PRIMARY KEY, radical INT, strokecount INT, JLPT INT, ONreading TEXT, KUNreading TEXT, nanori TEXT, meaning TEXT, skip_1 INT, skip_2 INT, skip_3 INT)")
     connection.commit()
 
     #Creating metadata
@@ -85,6 +86,9 @@ def kanjidic2_to_sqlite3(input, output):
         KUN = ''
         nanori = ''
         meaning = ''
+        skip_1 = ''
+        skip_2 = ''
+        skip_3 = ''
         for value in element.iter():
             if value.tag == 'literal':
                 literal = value.text
@@ -118,11 +122,20 @@ def kanjidic2_to_sqlite3(input, output):
                         if nanori != '':
                             nanori += ', '
                         nanori += reading_meaning.text
-                if literal != '' and radical != '' and strokecount != '' and meaning != '':
-                    cursor.execute("INSERT INTO kanji VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (literal, radical, strokecount, JLPT, ON, KUN, nanori, meaning))
-                    converted += 1
-                else:
-                    not_converted +=1
+            elif value.tag == 'query_code':
+                for q_code in value.iter():
+                    if q_code.tag == 'q_code' and 'qc_type' in q_code.attrib.keys() and q_code.attrib['qc_type'] == 'skip' and 'skip_misclass' not in q_code.attrib.keys():
+                        s = q_code.text
+                        s = s.split('-')
+                        skip_1 = s[0]
+                        skip_2 = s[1]
+                        skip_3 = s[2]
+
+        if literal != '' and radical != '' and strokecount != '' and meaning != '':
+                cursor.execute("INSERT INTO kanji VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (literal, radical, strokecount, JLPT, ON, KUN, nanori, meaning, skip_1, skip_2, skip_3))
+                converted += 1
+        else:
+                not_converted +=1
 
     connection.commit()
 
