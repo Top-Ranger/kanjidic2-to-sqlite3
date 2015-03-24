@@ -59,7 +59,7 @@ def kanjidic2_to_sqlite3(input, output):
     connection.commit()
 
     #Creating metadata
-    cursor.execute("INSERT INTO meta VALUES ('license', 'CC-BY-SA 3.0 Unported')")
+    cursor.execute("INSERT INTO meta VALUES ('license', 'CC-BY-SA 4.0 International')")
     cursor.execute("INSERT INTO meta VALUES ('database date of creation', ?)", (time.strftime('%Y-%m-%d'),))
 
     #Parsing KANJIDIC2 xml
