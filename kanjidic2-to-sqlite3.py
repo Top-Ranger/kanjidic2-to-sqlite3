@@ -20,7 +20,6 @@ import os
 import time
 import sqlite3
 import xml.etree.ElementTree
-from PyQt4.QtCore import qAbs
 
 
 def kanjidic2_to_sqlite3(input, output):
