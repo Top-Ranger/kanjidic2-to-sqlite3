@@ -55,6 +55,14 @@ def kanjidic2_to_sqlite3(input, output):
     #Creating tables
     cursor.execute("CREATE TABLE meta (key TEXT PRIMARY KEY, value TEXT)")
     cursor.execute("CREATE TABLE kanji (literal TEXT PRIMARY KEY, radical INT, strokecount INT, JLPT INT, ONreading TEXT, KUNreading TEXT, nanori TEXT, meaning TEXT, skip_1 INT, skip_2 INT, skip_3 INT)")
+    cursor.execute("CREATE INDEX idx_radical ON kanji(radical)")
+    cursor.execute("CREATE INDEX idx_strokecount ON kanji(strokecount)")
+    cursor.execute("CREATE INDEX idx_jlpt ON kanji(jlpt)")
+    cursor.execute("CREATE INDEX idx_skip ON kanji(skip_1, skip_2, skip_3)")
+    cursor.execute("CREATE INDEX idx_skip1 ON kanji(skip_1)")
+    cursor.execute("CREATE INDEX idx_skip2 ON kanji(skip_2)")
+    cursor.execute("CREATE INDEX idx_skip3 ON kanji(skip_3)")
+    
     connection.commit()
 
     #Creating metadata
