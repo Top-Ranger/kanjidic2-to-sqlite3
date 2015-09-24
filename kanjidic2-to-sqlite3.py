@@ -94,6 +94,7 @@ def kanjidic2_to_sqlite3(input, output):
         KUN = ''
         nanori = ''
         meaning = ''
+        meaning_fr = ''
         skip_1 = ''
         skip_2 = ''
         skip_3 = ''
@@ -122,6 +123,12 @@ def kanjidic2_to_sqlite3(input, output):
                                 if KUN != '':
                                     KUN += ', '
                                 KUN += rmgroup.text
+                            elif rmgroup.tag == 'meaning' and len(rmgroup.attrib) > 0 and rmgroup.attrib['m_lang'] == 'fr':
+                                if meaning_fr != '':
+                                    meaning_fr += ', '
+                                else:
+                                    meaning_fr = '(fr) '
+                                meaning_fr += rmgroup.text
                             elif rmgroup.tag == 'meaning' and len(rmgroup.attrib) == 0:
                                 if meaning != '':
                                     meaning += ', '
@@ -139,8 +146,8 @@ def kanjidic2_to_sqlite3(input, output):
                         skip_2 = s[1]
                         skip_3 = s[2]
 
-        if literal != '' and radical != '' and strokecount != '' and meaning != '':
-                cursor.execute("INSERT INTO kanji VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (literal, radical, strokecount, JLPT, ON, KUN, nanori, meaning, skip_1, skip_2, skip_3))
+        if literal != '' and radical != '' and strokecount != '' and (meaning != '' or meaning_fr != ''):
+                cursor.execute("INSERT INTO kanji VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (literal, radical, strokecount, JLPT, ON, KUN, nanori, meaning_fr if meaning_fr != '' else meaning, skip_1, skip_2, skip_3))
                 converted += 1
         else:
                 not_converted +=1
